@@ -1,0 +1,17 @@
+package com.chetan.guardrailapi.service;
+
+import com.chetan.guardrailapi.dto.UserDTO;
+import java.util.List;
+
+public interface UserService {
+
+    UserDTO createUser(UserDTO userDTO);
+
+    List<UserDTO> getAllUsers();
+
+    UserDTO getUserById(Long id);
+
+    UserDTO updateUser(Long id, UserDTO userDTO);   // ✅ NEW
+
+    void deleteUser(Long id);
+}

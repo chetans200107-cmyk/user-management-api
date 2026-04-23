@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: pg_db
+    environment:
+      POSTGRES_DB: intern_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      TZ: Asia/Kolkata
+    ports:
+      - "5432:5432"
