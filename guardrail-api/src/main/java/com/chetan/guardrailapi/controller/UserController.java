@@ -1,15 +1,18 @@
 package com.chetan.guardrailapi.controller;
 
 import com.chetan.guardrailapi.dto.UserDTO;
-import com.chetan.guardrailapi.exception.ApiResponse;
 import com.chetan.guardrailapi.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "User Controller", description = "User Management APIs")
 public class UserController {
 
     private final UserService userService;
@@ -18,35 +21,35 @@ public class UserController {
         this.userService = userService;
     }
 
-    // CREATE
+    @Operation(summary = "Create user")
     @PostMapping
-    public ApiResponse<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
-        return new ApiResponse<>(200, userService.createUser(userDTO));
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO userDTO) {
+        return ResponseEntity.ok(userService.createUser(userDTO));
     }
 
-    // GET ALL
+    @Operation(summary = "Get all users")
     @GetMapping
-    public ApiResponse<List<UserDTO>> getAllUsers() {
-        return new ApiResponse<>(200, userService.getAllUsers());
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // GET BY ID
+    @Operation(summary = "Get user by ID")
     @GetMapping("/{id}")
-    public ApiResponse<UserDTO> getUserById(@PathVariable Long id) {
-        return new ApiResponse<>(200, userService.getUserById(id));
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    // UPDATE
+    @Operation(summary = "Update user")
     @PutMapping("/{id}")
-    public ApiResponse<UserDTO> updateUser(@PathVariable Long id,
-                                           @Valid @RequestBody UserDTO userDTO) {
-        return new ApiResponse<>(200, userService.updateUser(id, userDTO));
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
+                                              @RequestBody @Valid UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, userDTO));
     }
 
-    // DELETE
+    @Operation(summary = "Delete user")
     @DeleteMapping("/{id}")
-    public ApiResponse<String> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return new ApiResponse<>(200, "User deleted successfully");
+        return ResponseEntity.ok("User deleted successfully");
     }
 }
